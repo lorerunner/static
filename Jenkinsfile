@@ -9,7 +9,10 @@ pipeline{
 
         stage('Upload to AWS') {
             steps {
-                sh 'echo "Hello world Upload to AWS"'
+              withAWS(region:'us-east-2',credentials:'AKIAVM527RRSPB6DIVXZ') {
+              s3Delete(bucket: 'jenkinsbuckets', path:'**/*')
+              s3Upload(bucket: 'jenkinsbuckets', workingDir:'build', includePathPattern:'**/*');
+            }
             }
         }
     }
