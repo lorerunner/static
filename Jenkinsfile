@@ -9,7 +9,7 @@ pipeline{
 
         stage('Upload to AWS') {
             steps {
-              withAWS(region:'us-east-2',credentials:'AKIAVM527RRSH56QGFV4') {
+              withAWS(region:'us-east-2',credentials:'jenkinsforaws') {
               s3Delete(bucket: 'jenkinsbuckets', path:'**/*')
               s3Upload(bucket: 'jenkinsbuckets', workingDir:'build', includePathPattern:'**/*');
             }
