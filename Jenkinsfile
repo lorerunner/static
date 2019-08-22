@@ -11,7 +11,7 @@ pipeline{
             steps {
               withAWS(region:'us-east-2',credentials:'jenkinsforaws') {
               s3Delete(bucket: 'jenkinsbuckets', path:'**/*')
-              s3Upload(bucket: 'jenkinsbuckets', includePathPattern:'**/*');
+              s3Upload(bucket: 'jenkinsbuckets', path:'index.html');
             }
             }
         }
