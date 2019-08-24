@@ -20,5 +20,12 @@ pipeline {
         }
       }
     }
+
+    stage('Scan') {
+    steps{
+        aquaMicroscanner imageName: '', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+     }
+     }
+
   }
 }
