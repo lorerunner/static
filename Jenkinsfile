@@ -26,7 +26,6 @@ pipeline {
 
     stage('Scan') {
     steps{
-        docker.build("static-app")
         aquaMicroscanner imageName: 'static-app', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
      }
      }
