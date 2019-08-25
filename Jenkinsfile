@@ -13,6 +13,7 @@ pipeline {
         sh 'tidy -q -e *.html'
       }
     }
+
     stage('Upload to AWS') {
       steps {
         withAWS(region: 'us-east-2', credentials: 'jenkinsforaws') {
@@ -21,9 +22,12 @@ pipeline {
       }
     }
 
+
+
     stage('Scan') {
     steps{
-        aquaMicroscanner imageName: '', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+        docker.build("static-app")
+        aquaMicroscanner imageName: 'static-app', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
      }
      }
 
