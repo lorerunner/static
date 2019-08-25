@@ -22,20 +22,27 @@ pipeline {
       }
     }
 
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-    steps{
-      script{
-        docker.build("devops/static-app")
+    // stage('Build image') {
+    //     /* This builds the actual image; synonymous to
+    //      * docker build on the command line */
+    // steps{
+    //   script{
+    //     docker.build("devops/static-app")
+    //   }
+    // }
+    // }
+    stage('build Dockerimage 1') {
+      steps{
+        script {
+          def apitestimage = docker.build('apitestimage', '--no-cache=true dockerbuild')
+        }
       }
-    }
     }
 
 
     stage('Scan') {
     steps{
-        aquaMicroscanner imageName: 'devops/static-app', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+        aquaMicroscanner imageName: 'apitestimage', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
      }
      }
 
