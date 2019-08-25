@@ -22,11 +22,17 @@ pipeline {
       }
     }
 
+    stage('Build image') {
+        /* This builds the actual image; synonymous to
+         * docker build on the command line */
+
+        app = docker.build("devops/static-app")
+    }
 
 
     stage('Scan') {
     steps{
-        aquaMicroscanner imageName: 'static-app', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+        aquaMicroscanner imageName: 'devops/static-app', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
      }
      }
 
