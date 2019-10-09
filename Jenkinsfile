@@ -14,6 +14,16 @@ pipeline {
       }
     }
 
+  stage('Security Scan') {
+    steps{
+        script{
+          docker.build("devops/static-app")
+        }
+        aquaMicroscanner imageName: 'devops/static-app', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+     }
+   }
+
+
     stage('Upload to AWS') {
       steps {
         withAWS(region: 'us-east-2', credentials: 'jenkinsforaws') {
